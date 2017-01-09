@@ -25,13 +25,19 @@ class HexSplitter
     private $body;
 
     /**
+     * @const string
+     */
+    const MSG_BOUNDARY = 'C0';
+
+    /**
      * @param string $hexData
      */
     public function __construct($hexData)
     {
         $this->hexData = $hexData;
-        $this->header = substr($this->hexData, 0, 23);
-        $this->body = substr($this->hexData, 24);
+        $hexData = str_replace(self::MSG_BOUNDARY, '', $hexData);
+        $this->header = substr($hexData, 0, 23);
+        $this->body = substr($hexData, 24);
     }
 
     /**
