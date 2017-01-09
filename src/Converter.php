@@ -2,7 +2,7 @@
 
 namespace OBD;
 
-class DataProcessor
+class Converter
 {
     public static function toHex($string){
         $hex = '';
