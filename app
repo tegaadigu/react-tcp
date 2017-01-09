@@ -1,6 +1,6 @@
 #!/usr/bin/env php
 <?php
-require dirname(__DIR__) . '/tcp-socket/vendor/autoload.php';
+require dirname(__DIR__) . '/react-tcp/vendor/autoload.php';
 
 use OBD\DataProcessor;
 
@@ -17,12 +17,12 @@ $socket->on(
         $conn->on(
             'data',
             function ($data) use ($conns, $conn) {
-                echo 'data from ..'.$conn->getRemoteAddress().PHP_EOL;
+                echo 'data from ..' . $conn->getRemoteAddress() . PHP_EOL;
 
                 $hexData = DataProcessor::toHex($data);
                 print_r($data);
 
-                echo PHP_EOL."HEX VERSION...".PHP_EOL;
+                echo PHP_EOL . "HEX VERSION..." . PHP_EOL;
                 var_dump($hexData);
                 foreach ($conns as $current) {
 //                    if ($conn === $current) {
