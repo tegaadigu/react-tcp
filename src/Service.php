@@ -2,7 +2,8 @@
 
 namespace OBD;
 
-use OBD\Processor\HexSplitter;
+use OBD\Processor\HexDataStore;
+use OBD\Commands\Commands as CommandService;
 
 class Service
 {
@@ -13,20 +14,12 @@ class Service
      */
     public function process($data)
     {
-        if(empty($data) === true) {
+        if (count($data) === 0) {
             return '';
         }
+        $commandService = new CommandService();
+        $commandService->processCommand((new HexDataStore(Converter::toHex($data))));
 
-        $slicedData = new HexSplitter(Converter::toHex($data));
-
-        echo 'Header...'.PHP_EOL;
-        print_r($slicedData->getHeader());
-
-        echo PHP_EOL.'body...'.PHP_EOL;
-        print_r($slicedData->getBody());
-
-        echo PHP_EOL.'Raw data...'.PHP_EOL;
-        print_r($slicedData->getRawData());
-        return 'ooh hey there';
+        return $commandService->performAction();
     }
 }

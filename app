@@ -2,9 +2,7 @@
 <?php
 require dirname(__DIR__) . '/react-tcp/vendor/autoload.php';
 
-
 use OBD\Service;
-
 
 $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server($loop);
@@ -19,18 +17,13 @@ $socket->on(
             'data',
             function ($data) use ($conns, $conn) {
                 echo 'data from ..' . $conn->getRemoteAddress() . PHP_EOL;
-
-                (new Service())->process($data);
-
-                echo PHP_EOL . 'next shenanigans..' . PHP_EOL;
-                print_r($data);
-                echo PHP_EOL . "HEX VERSION..." . PHP_EOL;
+                $response = (new Service())->process($data);
                 foreach ($conns as $current) {
-//                    if ($conn === $current) {
-//                        continue;
-//                    }
-//                    $current->write($conn->getRemoteAddress() . ': ');
-//                    $current->write($data);
+                    if ($conn === $current) {
+                        $current->write($conn->getRemoteAddress() . ': ');
+                        $current->write($response);
+                    }
+
                 }
             }
         );
