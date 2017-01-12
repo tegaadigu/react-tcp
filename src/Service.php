@@ -20,6 +20,6 @@ class Service
         $commandService = new CommandService();
         $commandService->processCommand((new HexDataStore(Converter::toHex($data))));
 
-        return $commandService->performAction();
+        return hex2bin($commandService->performAction());
     }
 }

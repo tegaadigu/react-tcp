@@ -11,7 +11,6 @@ class Converter
      */
     public static function toHex($string)
     {
-        return $string;
         $hex = '';
         $strLength = strlen($string);
         for ($i = 0; $i < $strLength; $i++) {
