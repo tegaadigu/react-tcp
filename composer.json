@@ -1,0 +1,19 @@
+{
+  "name": "tcp-obd2",
+  "license": "Private",
+  "require": {
+    "php": ">=5.5",
+    "react/react": "^0.4.2"
+  },
+  "autoload": {
+    "psr-4": {
+      "OBD\\": "./src/"
+    }
+  },
+  "require-dev": {
+    "ext-xdebug": "*"
+  },
+  "scripts": {
+    "run-server": "./app"
+  }
+}
