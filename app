@@ -12,16 +12,18 @@ $port = 9999;
 $socket->on(
     'connection',
     function ($conn) use ($conns) {
+        echo 'New Connection from ..' . $conn->getRemoteAddress() . PHP_EOL;
         $conns->attach($conn);
         $conn->on(
             'data',
             function ($data) use ($conns, $conn) {
                 echo 'data from ..' . $conn->getRemoteAddress() . PHP_EOL;
                 $response = (new Service())->process($data);
+                echo hex2bin($response);
                 foreach ($conns as $current) {
                     if ($conn === $current) {
                         $current->write($conn->getRemoteAddress() . ': ');
-                        $current->write($response);
+                        $current->write(hex2bin($response));
                     }
 
                 }

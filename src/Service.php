@@ -18,8 +18,11 @@ class Service
             return '';
         }
         $commandService = new CommandService();
-        $commandService->processCommand((new HexDataStore(Converter::toHex($data))));
+        $hexData = (new HexDataStore(Converter::toHex($data)));
+        echo 'Raw Hex data..'.PHP_EOL;
+        print_r($hexData->getRawData());
+        $commandService->processCommand($hexData);
 
-        return hex2bin($commandService->performAction());
+        return $commandService->performAction();
     }
 }
